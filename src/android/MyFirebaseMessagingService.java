@@ -10,6 +10,8 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -20,6 +22,11 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FCMPlugin";
+
+    private final static AtomicInteger c = new AtomicInteger(0);
+    public static int getID() {
+        return c.incrementAndGet();
+    }
 
     /**
      * Called when message is received.
@@ -41,16 +48,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		}
 		
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("wasTapped", false);
+		data.put("body", remoteMessage.getNotification().getBody());
 		for (String key : remoteMessage.getData().keySet()) {
                 Object value = remoteMessage.getData().get(key);
                 Log.d(TAG, "\tKey: " + key + " Value: " + value);
 				data.put(key, value);
         }
 		
-		Log.d(TAG, "\tNotification Data: " + data.toString());
+		Log.d(TAG, "\tNotification Data: " + remoteMessage.getNotification().getTitle() + remoteMessage.getNotification().getBody()+ data);
         FCMPlugin.sendPushPayload( data );
-        //sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getData());
+        sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(),data);
     }
     // [END receive_message]
 
@@ -80,6 +87,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify( getID() /* ID of notification */, notificationBuilder.build());
     }
 }
