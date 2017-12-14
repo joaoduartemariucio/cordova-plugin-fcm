@@ -83,6 +83,44 @@ FCMPlugin.onNotification(function(data){
     }
 });
 ```
+#### Receiving push notification data Custom
+
+It is advisable to use the cordova-dialogs plugin so when notifications are received to have the same behavior on both platforms you can follow the example below
+
+```javascript
+    FCMPlugin.onNotification(function(data){
+        if(data.wasTapped){
+            if(cordova.platformId == "ios"){
+                console.log(data);
+                $cordovaDialogs.alert(data.aps.alert.body, 'FullGuard', 'OK').then(function() {
+                    //callback success
+                });
+            }else{
+                $cordovaDialogs.alert(data.body, 'FullGuard', 'OK').then(function() {
+                //callback success
+                });
+            }
+        }else{
+            if(cordova.platformId == "ios"){
+                console.log(data);
+                $cordovaDialogs.alert(data.aps.alert.body, 'FullGuard', 'OK').then(function() {
+                    //callback success
+                });
+            }else{
+                $cordovaDialogs.alert(data.body, 'FullGuard', 'OK').then(function() {
+                    //callback success
+                });
+            }
+        } 
+    });
+```
+The command below adds the cordova-dialogs plugin
+
+```Bash
+cordova plugin add cordova-plugin-dialogs
+
+```
+Documentation http://ngcordova.com/docs/plugins/dialogs/
 
 #### Send notification. Payload example (REST API)
 Full documentation: https://firebase.google.com/docs/cloud-messaging/http-server-ref  
