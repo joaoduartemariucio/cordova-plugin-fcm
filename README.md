@@ -1,5 +1,4 @@
 # Google Firebase Cloud Messaging Cordova Push Plugin
-> Extremely easy plug&play push notification plugin for Cordova applications with Google Firebase FCM.
 
 #### Version 3.0 (14/12/2017)
 - **Free testing server available for free! https://cordova-plugin-fcm.appspot.com**
