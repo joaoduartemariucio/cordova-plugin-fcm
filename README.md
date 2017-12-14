@@ -152,15 +152,6 @@ Free testing server: https://cordova-plugin-fcm.appspot.com
 //priority: must be set to "high" for delivering notifications on closed iOS apps
 //restricted_package_name: optional field if you want to send only to a restricted app package (i.e: com.myapp.test)
 ```
-## How it works
-Send a push notification to a single device or topic.
-- 1.a Application is in foreground:
- - The notification data is received in the JavaScript callback without notification bar message (this is the normal behaviour of mobile push notifications).
-- 1.b Application is in background or closed:
- - The device displays the notification message in the device notification bar.
- - If the user taps the notification, the application comes to foreground and the notification data is received in the JavaScript callback.
- - If the user does not tap the notification but opens the applicacion, nothing happens until the notification is tapped.
-
 
 ## License
 ```
